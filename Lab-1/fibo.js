@@ -1,3 +1,5 @@
+"use strict";
+
 const fibo = function (number) {
     number = Math.abs(number);
     if (number <= 2) return 1;

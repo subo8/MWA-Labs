@@ -1,3 +1,5 @@
+"use strict";
+
 const child_process = require("child_process");
 
 console.log("1: Start app");
