@@ -1,26 +1,32 @@
 /**
- * Assignment 2.3
+ * Assignment 3.1
+ * index.js
  */
 
 "use strict";
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
-require('dotenv').config();
 const homeRouter = require('./routes/home/home');
+const jsonRouter = require('./routes/json/json');
 
 const app = express();
 
-//response is singleton, once it ends there is no other response.
-//if no next param, there is no response, browser is reloading endlessly.
-app.use((req, res, next) => {
-    console.log(req.method, req.url);
-    next(); //terminating middle ware
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.join(__dirname, "/resources/")));
 
 app.use("", homeRouter);
+
+app.use("/api", jsonRouter);
+
+app.use((req, res, next) => {
+    res.status(404).json({
+        message: `Page not found`
+    })
+});
 
 const server = app.listen(process.env.PORT, () => {
     console.log(process.env.LISTEN_PORT_MSG, server.address().port);
