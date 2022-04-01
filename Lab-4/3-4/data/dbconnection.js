@@ -1,3 +1,10 @@
+/**
+ * Assignment 4.3, 4.4
+ * dbconnection.js
+ */
+
+"use strict";
+
 const MongoClient = require('mongodb').MongoClient;
 
 let _connection = null;

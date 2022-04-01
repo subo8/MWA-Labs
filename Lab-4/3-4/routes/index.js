@@ -1,3 +1,10 @@
+/**
+ * Assignment 4.3, 4.4
+ * index.js
+ */
+
+"use strict";
+
 const express = require('express');
 const router = express.Router();
 const games = require("../controllers/games");

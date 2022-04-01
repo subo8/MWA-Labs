@@ -1,3 +1,10 @@
+/**
+ * Assignment 4.3, 4.4
+ * app.js
+ */
+
+"use strict";
+
 console.log("Mean game running")
 
 require('dotenv').config();

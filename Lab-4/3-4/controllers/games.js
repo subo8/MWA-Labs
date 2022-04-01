@@ -1,4 +1,9 @@
+/**
+ * Assignment 4.3, 4.4
+ * games controller.js
+ */
 
+"use strict";
 const dbConnection = require('../data/dbconnection');
 
 module.exports.getAll = function (req, res) {
@@ -9,7 +14,7 @@ module.exports.getAll = function (req, res) {
 
     gamesCollection.find().toArray(function (err, games) {
         console.log("Found games");
-        res.status(200).json(games);
+        res.status(process.env.RES200).json(games);
     });
 }
 
@@ -33,12 +38,12 @@ module.exports.getSpecific = function (req, res) {
         }
         gamesCollection.find().skip(offset).limit(count).toArray(function (err, games) {
             console.log("Found games");
-            res.status(200).json(games);
+            res.status(process.env.RES200).json(games);
         });
     } else {
         gamesCollection.find().limit(3).toArray(function (err, games) {
             console.log("Found games");
-            res.status(200).json(games);
+            res.status(process.env.RES200).json(games);
         });
     }
 }
@@ -56,27 +61,28 @@ module.exports.create = function (req, res) {
         newGame.price = parseFloat(req.body.price);
         gamesCollection.insertOne(newGame, function (err, savedGame) {
             if (err) {
-                res.status(500).json({ error: err });
+                res.status(process.env.RES500).json({ error: err });
             } else {
                 console.log("Game saved");
-                res.status(201).json(savedGame);
+                res.status(process.env.RES201).json(savedGame);
             }
         });
     } else {
-        res.status(400).json({ message: "Data is wrong" })
+        res.status(process.env.RES400).json({ message: "Data is wrong" })
     }
 }
 
 module.exports.delete = function (req, res) {
     console.log("DELETE by name called");
-    try {
-        const db = dbConnection.get();
-        const gamesCollection = db.collection("games");
-        let myquery = { title: 'newGame' };
-        gamesCollection.deletOne(myquery);
-        res.status(200).json("Successful delete operation");
-    } catch (e) {
-        res.status(500).json("Unsuccessful delete operation");
-    }
+    const db = dbConnection.get();
+    const gamesCollection = db.collection("games");
+    gamesCollection.deleteOne(req.params, function (err, deleted) {
+        if (err) {
+            res.status(process.env.RES500).json({ error: err });
+        } else {
+            console.log("Game deleted");
+            res.status(process.env.RES200).json("Deletion Success");
+        }
+    })
 
 }
