@@ -16,7 +16,7 @@ const studentsSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    courses: courseSchema
+    courses: [courseSchema]
 });
 
 mongoose.model(process.env.STUDENTS_MODEL, studentsSchema, process.env.STUDENTS_COLLECTION);

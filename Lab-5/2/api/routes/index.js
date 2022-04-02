@@ -1,5 +1,5 @@
 /**
- * Assignment 5
+ * Assignment 5.2
  * index.js
  */
 
@@ -12,12 +12,10 @@ const courses = require("../controllers/course.controller");
 
 router.route("/students").get(students.getAllMongoose);
 
-router.route("/students/:studentIndex").get(students.getOneMongoose);
+router.route("/student/:studentIndex").get(students.getOneMongoose);
 
-router.route("/students/:studentID/courses").get(courses.getAllMongoose);
+router.route("/students/:studentID/courses").get(courses.getCourseByStudentID);
 
-// router.route("/games/create").post(games.create);
-
-// router.route("/games/delete/:title").delete(games.delete);
+router.route("/students/:studentID/courses/:courseID").get(courses.getCourseByStudentAndCourseID);
 
 module.exports = router;

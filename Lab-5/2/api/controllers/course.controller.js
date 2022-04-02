@@ -5,13 +5,26 @@
 
 "use strict";
 const mongoose = require('mongoose');
-const ObjectId = require('mongodb').ObjectId;
 const Students = mongoose.model(process.env.STUDENTS_MODEL);
 
-module.exports.getAllMongoose = function (req, res) {
-    const studentID = parseInt(req.params.studentID);
-    Students.find({ _id: ObjectId(studentID) }).select("courses").exec(function (err, students) {
-        console.log("Found students", students.length);
+module.exports.getCourseByStudentID = function (req, res) {
+    console.log("Course get called");
+    const studentID = req.params.studentID;
+    Students.findById(studentID).select("courses").exec(function (err, students) {
+        console.log(studentID);
+        console.log("Found students", students.courses.length);
+        res.status(process.env.RESP200).json(students.courses);
+    });
+}
+
+module.exports.getCourseByStudentAndCourseID = function (req, res) {
+    console.log("Course get called");
+    const studentID = req.params.studentID;
+    const courseID = req.params.courseID;
+    console.log(courseID);
+    Students.findById(studentID).select("courses").exec(function (err, students) {
+        console.log(studentID);
+        console.log("Found students", students.courses.length);
         res.status(process.env.RESP200).json(students.courses);
     });
 }
