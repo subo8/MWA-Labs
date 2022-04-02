@@ -1,3 +1,10 @@
+/**
+ * Assignment 5.1
+ * games-model.js
+ */
+
+"use strict";
+
 const mongoose = require('mongoose');
 
 const gamesSchema = mongoose.Schema({
